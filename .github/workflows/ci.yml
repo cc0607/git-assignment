@@ -1,0 +1,26 @@
+name: PR Python Check
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run-python:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run specific script based on branch
+        env:
+          BRANCH_NAME: ${{ github.head_ref }}
+        run: |
+          echo "Current branch is $BRANCH_NAME"
+          if [ "$BRANCH_NAME" = "hw1-p" ]; then
+            python3 hello.py
+          elif [ "$BRANCH_NAME" = "hw1-f" ]; then
+            python3 fail.py
+          else
+            echo "No script for this branch."
+          fi
